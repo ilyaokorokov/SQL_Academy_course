@@ -10,7 +10,7 @@ FROM passenger
 </details>
 
 <details>
-<summary>Задание №2: Вывести названия всеx авиакомпаний.</summary>
+<summary><b>Задание №2:</b> Вывести названия всеx авиакомпаний.</summary>
   
   ```mysql
 SELECT name
