@@ -29,6 +29,7 @@ WHERE town_from = 'Moscow'
 ```
 
 </details>
+
 <summary>Задание №4: Вывести имена людей, которые заканчиваются на "man".</summary>
   
   ```mysql
@@ -38,6 +39,7 @@ WHERE name LIKE '%man'
 ```
 
 </details>
+
 <summary>Задание №5: Вывести количество рейсов, совершенных на TU-134.</summary>
   
   ```mysql
@@ -47,6 +49,7 @@ WHERE plane = 'TU-134'
 ```
 
 </details>
+
 <summary>Задание №6: Какие компании совершали перелеты на Boeing.</summary>
   
   ```mysql
@@ -57,6 +60,7 @@ WHERE plane = 'Boeing'
 ```
 
 </details>
+
 <summary>Задание №7: Вывести все названия самолётов, на которых можно улететь в Москву (Moscow).</summary>
   
   ```mysql
@@ -66,6 +70,7 @@ WHERE town_to = 'Moscow'
 ```
 
 </details>
+
 <summary>Задание №8: В какие города можно улететь из Парижа (Paris) и сколько времени это займёт?</summary>
   
   ```mysql
@@ -75,6 +80,7 @@ WHERE town_from = 'Paris'
 ```
 
 </details>
+
 <summary>Задание №9: Какие компании организуют перелеты из Владивостока (Vladivostok)?</summary>
   
   ```mysql
@@ -85,6 +91,7 @@ WHERE Trip.town_from = 'Vladivostok'
 ```
 
 </details>
+
 <summary>Задание №10: Вывести вылеты, совершенные с 10 ч. по 14 ч. 1 января 1900 г.</summary>
   
   ```mysql
@@ -94,6 +101,7 @@ WHERE time_out BETWEEN '1900-01-01 10:00:00' AND '1900-01-01 14:00:00'
 ```
 
 </details>
+
 <summary>Задание №11: Выведите пассажиров с самым длинным ФИО. Пробелы, дефисы и точки считаются частью имени.</summary>
   
   ```mysql
@@ -104,6 +112,7 @@ FROM Passenger)
 ```
 
 </details>
+
 <summary>Задание №12: Выведите идентификаторы всех рейсов и количество пассажиров на них. Обратите внимание, что на каких-то рейсах пассажиров может не быть. В этом случае выведите число "0".</summary>
   
   ```mysql
@@ -114,6 +123,7 @@ GROUP BY Trip.id;
 ```
 
 </details>
+
 <summary>Задание №13: Вывести имена людей, у которых есть полный тёзка среди пассажиров.</summary>
   
   ```mysql
@@ -124,6 +134,7 @@ HAVING count(name) = 2
 ```
 
 </details>
+
 <summary>Задание №14: В какие города летал Bruce Willis.</summary>
   
   ```mysql
@@ -135,6 +146,7 @@ WHERE Passenger.name='Bruce Willis'
 ```
 
 </details>
+
 <summary>Задание №15: Выведите дату и время прилёта пассажира Стив Мартин (Steve Martin) в Лондон (London).</summary>
   
   ```mysql
@@ -146,6 +158,7 @@ WHERE Passenger.name='Steve Martin' AND Trip.town_to='London'
 ```
 
 </details>
+
 <summary>Задание №16: Вывести отсортированный по количеству перелетов (по убыванию) и имени (по возрастанию) список пассажиров, совершивших хотя бы 1 полет.</summary>
   
   ```mysql
@@ -158,6 +171,7 @@ ORDER BY 2 DESC, 1 ASC
 ```
 
 </details>
+
 <summary>Задание №17: Определить, сколько потратил в 2005 году каждый из членов семьи. В результирующей выборке не выводите тех членов семьи, которые ничего не потратили.</summary>
   
   ```mysql
@@ -169,6 +183,7 @@ GROUP BY FamilyMembers.member_name, FamilyMembers.status
 ```
 
 </details>
+
 <summary>Задание №18: Выведите имя самого старшего человека. Если таких несколько, то выведите их всех.</summary>
   
   ```mysql
@@ -178,6 +193,7 @@ ORDER BY birthday LIMIT 1
 ```
 
 </details>
+
 <summary>Задание №19: Определить, кто из членов семьи покупал картошку (potato).</summary>
   
   ```mysql
@@ -190,6 +206,7 @@ GROUP BY 1
 ```
 
 </details>
+
 <summary>Задание №20: Сколько и кто из семьи потратил на развлечения (entertainment). Вывести статус в семье, имя, сумму.</summary>
   
   ```mysql
@@ -202,6 +219,7 @@ GROUP BY 1, 2
 ```
 
 </details>
+
 <summary>Задание №21: Определить товары, которые покупали более 1 раза.</summary>
   
   ```mysql
@@ -213,6 +231,7 @@ HAVING Count(*)>1
 ```
 
 </details>
+
 <summary>Задание №22: Найти имена всех матерей (mother).</summary>
   
   ```mysql
@@ -222,6 +241,7 @@ WHERE status='mother'
 ```
 
 </details>
+
 <summary>Задание №23: Найдите самый дорогой деликатес (delicacies) и выведите его цену.</summary>
   
   ```mysql
@@ -234,6 +254,7 @@ ORDER BY Payments.unit_price DESC LIMIT 1
 ```
 
 </details>
+
 <summary>Задание №24: Определить кто и сколько потратил в июне 2005.</summary>
   
   ```mysql
@@ -245,6 +266,7 @@ GROUP BY 1
 ```
 
 </details>
+
 <summary>Задание №25: Определить, какие товары не покупались в 2005 году.</summary>
   
   ```mysql
@@ -258,6 +280,7 @@ WHERE good_id NOT IN (
 ```
 
 </details>
+
 <summary>Задание №26: Определить группы товаров, которые не приобретались в 2005 году.</summary>
   
   ```mysql
@@ -269,7 +292,7 @@ WHERE YEAR(date)=2005)
 ```
 
 </details>
-</details>
+
 <summary>Задание №27: Узнайте, сколько было потрачено на каждую из групп товаров в 2005 году. Выведите название группы и потраченную на неё сумму. Если потраченная сумма равна нулю, т.е. товары из этой группы не покупались в 2005 году, то не выводите её.</summary>
   
   ```mysql
@@ -282,6 +305,7 @@ GROUP BY GoodTypes.good_type_name
 ```
 
 </details>
+
 <summary>Задание №28: Сколько рейсов совершили авиакомпании из Ростова (Rostov) в Москву (Moscow) ?</summary>
   
   ```mysql
@@ -291,6 +315,7 @@ WHERE town_from='Rostov' and town_to='Moscow'
 ```
 
 </details>
+
 <summary>Задание №29: Выведите имена пассажиров улетевших в Москву (Moscow) на самолете TU-134.</summary>
   
   ```mysql
@@ -303,6 +328,7 @@ GROUP BY Passenger.name
 ```
 
 </details>
+
 <summary>Задание №30: Выведите нагруженность (число пассажиров) каждого рейса (trip). Результат вывести в отсортированном виде по убыванию нагруженности.</summary>
   
   ```mysql
@@ -313,6 +339,7 @@ ORDER BY 2 DESC
 ```
 
 </details>
+
 <summary>Задание №31: Вывести всех членов семьи с фамилией Quincey.</summary>
   
   ```mysql
@@ -322,6 +349,7 @@ WHERE member_name LIKE '%Quincey'
 ```
 
 </details>
+
 <summary>Задание №32: Вывести средний возраст людей (в годах), хранящихся в базе данных. Результат округлите до целого в меньшую сторону.</summary>
   
   ```mysql
@@ -330,6 +358,7 @@ FROM FamilyMembers
 ```
 
 </details>
+
 <summary>Задание №33: Найдите среднюю цену икры на основе данных, хранящихся в таблице Payments. В базе данных хранятся данные о покупках красной (red caviar) и черной икры (black caviar). В ответе должна быть одна строка со средней ценой всей купленной когда-либо икры.</summary>
   
   ```mysql
@@ -340,6 +369,7 @@ WHERE Goods.good_name='red caviar' OR Goods.good_name='black caviar'
 ```
 
 </details>
+
 <summary>Задание №34: Сколько всего 10-ых классов.</summary>
   
   ```mysql
@@ -349,6 +379,7 @@ WHERE name LIKE '10%'
 ```
 
 </details>
+
 <summary>Задание №35: Сколько различных кабинетов школы использовались 2 сентября 2019 года для проведения занятий?</summary>
   
   ```mysql
@@ -358,6 +389,7 @@ WHERE date like '2019-09-02'
 ```
 
 </details>
+
 <summary>Задание №36: Выведите информацию об обучающихся живущих на улице Пушкина (ul. Pushkina)?</summary>
   
   ```mysql
@@ -367,6 +399,7 @@ WHERE address like 'ul. Pushkina%'
 ```
 
 </details>
+
 <summary>Задание №37: Сколько лет самому молодому обучающемуся?</summary>
   
   ```mysql
@@ -375,6 +408,7 @@ FROM Student
 ```
 
 </details>
+
 <summary>Задание №38: Сколько Анн (Anna) учится в школе?</summary>
   
   ```mysql
@@ -384,6 +418,7 @@ WHERE first_name='Anna'
 ```
 
 </details>
+
 <summary>Задание №39: Сколько обучающихся в 10 B классе?</summary>
   
   ```mysql
@@ -394,6 +429,7 @@ WHERE Class.name='10 B'
 ```
 
 </details>
+
 <summary>Задание №40: Выведите название предметов, которые преподает Ромашкин П.П. (Romashkin P.P.). Обратите внимание, что в базе данных есть несколько учителей с такими фамилией и инициалами.</summary>
   
   ```mysql
@@ -405,55 +441,7 @@ WHERE Teacher.last_name='Romashkin' AND Teacher.first_name LIKE 'P%' AND Teacher
 ```
 
 </details>
-<summary>Задание №26: Определить группы товаров, которые не приобретались в 2005 году.</summary>
-  
-  ```mysql
 
-```
-
-</details>
-<summary>Задание №26: Определить группы товаров, которые не приобретались в 2005 году.</summary>
-  
-  ```mysql
-
-```
-
-</details>
-<summary>Задание №26: Определить группы товаров, которые не приобретались в 2005 году.</summary>
-  
-  ```mysql
-
-```
-
-</details>
-<summary>Задание №26: Определить группы товаров, которые не приобретались в 2005 году.</summary>
-  
-  ```mysql
-
-```
-
-</details>
-<summary>Задание №26: Определить группы товаров, которые не приобретались в 2005 году.</summary>
-  
-  ```mysql
-
-```
-
-</details>
-<summary>Задание №26: Определить группы товаров, которые не приобретались в 2005 году.</summary>
-  
-  ```mysql
-
-```
-
-</details>
-<summary>Задание №26: Определить группы товаров, которые не приобретались в 2005 году.</summary>
-  
-  ```mysql
-
-```
-
-</details>
 <summary>Задание №26: Определить группы товаров, которые не приобретались в 2005 году.</summary>
   
   ```mysql
