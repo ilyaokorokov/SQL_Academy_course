@@ -44,7 +44,7 @@ WHERE name LIKE '%man'
   
   ```mysql
 SELECT count(*) as count
-FROM trip
+FROM Trip
 WHERE plane = 'TU-134'
 ```
 
@@ -55,7 +55,7 @@ WHERE plane = 'TU-134'
   ```mysql
 SELECT DISTINCT name
 FROM Company
-JOIN Trip on Company.id = trip.company
+JOIN Trip on Company.id = Trip.company
 WHERE plane = 'Boeing'
 ```
 
@@ -75,7 +75,7 @@ WHERE town_to = 'Moscow'
   
   ```mysql
 SELECT town_to,	TIMEDIFF(time_in, time_out) as flight_time
-FROM trip
+FROM Trip
 WHERE town_from = 'Paris'
 ```
 
@@ -108,7 +108,7 @@ WHERE time_out BETWEEN '1900-01-01 10:00:00' AND '1900-01-01 14:00:00'
 SELECT name
 FROM Passenger
 WHERE LENGTH(name)=(SELECT max(LENGTH(name))
-FROM Passenger)
+  FROM Passenger)
 ```
 
 </details>
@@ -118,7 +118,7 @@ FROM Passenger)
   ```mysql
 SELECT Trip.id AS id, COUNT(Pass_in_trip.id) AS count
 FROM Trip
-JOIN Pass_in_trip ON Trip.id=Pass_in_trip.trip
+JOIN Pass_in_trip ON Trip.id = Pass_in_trip.trip
 GROUP BY Trip.id;
 ```
 
@@ -128,7 +128,7 @@ GROUP BY Trip.id;
   
   ```mysql
 SELECT name
-FROM passenger
+FROM Passenger
 GROUP BY 1
 HAVING count(name) = 2
 ```
@@ -140,9 +140,9 @@ HAVING count(name) = 2
   ```mysql
 SELECT Trip.town_to
 FROM Trip
-JOIN Pass_in_trip ON Trip.id=Pass_in_trip.trip
-JOIN Passenger ON Pass_in_trip.passenger=Passenger.id
-WHERE Passenger.name='Bruce Willis'
+JOIN Pass_in_trip ON Trip.id = Pass_in_trip.trip
+JOIN Passenger ON Pass_in_trip.passenger = Passenger.id
+WHERE Passenger.name = 'Bruce Willis'
 ```
 
 </details>
@@ -152,9 +152,9 @@ WHERE Passenger.name='Bruce Willis'
   ```mysql
 SELECT Trip.time_in
 FROM Trip
-JOIN Pass_in_trip ON Trip.id=Pass_in_trip.trip
-JOIN Passenger ON Pass_in_trip.passenger=Passenger.id
-WHERE Passenger.name='Steve Martin' AND Trip.town_to='London'
+JOIN Pass_in_trip ON Trip.id = Pass_in_trip.trip
+JOIN Passenger ON Pass_in_trip.passenger = Passenger.id
+WHERE Passenger.name = 'Steve Martin' AND Trip.town_to = 'London'
 ```
 
 </details>
@@ -164,9 +164,9 @@ WHERE Passenger.name='Steve Martin' AND Trip.town_to='London'
   ```mysql
 SELECT Passenger.name, COUNT(*) as count
 FROM Pass_in_trip
-JOIN Passenger ON Pass_in_trip.passenger=Passenger.id
+JOIN Passenger ON Pass_in_trip.passenger = Passenger.id
 GROUP BY Passenger.name
-HAVING count>=1
+HAVING count >= 1
 ORDER BY 2 DESC, 1 ASC
 ```
 
@@ -199,9 +199,9 @@ ORDER BY birthday LIMIT 1
   ```mysql
 SELECT FamilyMembers.status
 FROM FamilyMembers
-JOIN Payments ON FamilyMembers.member_id=Payments.family_member
-JOIN Goods ON Payments.good=Goods.good_id
-WHERE Goods.good_name='potato'
+JOIN Payments ON FamilyMembers.member_id = Payments.family_member
+JOIN Goods ON Payments.good = Goods.good_id
+WHERE Goods.good_name = 'potato'
 GROUP BY 1
 ```
 
@@ -212,9 +212,9 @@ GROUP BY 1
   ```mysql
 SELECT FamilyMembers.status, FamilyMembers.member_name, SUM (Payments.unit_price*Payments.amount) as costs
 FROM FamilyMembers
-JOIN Payments ON FamilyMembers.member_id=Payments.family_member
-JOIN Goods ON Payments.good=Goods.good_id
-WHERE Goods.type=4
+JOIN Payments ON FamilyMembers.member_id = Payments.family_member
+JOIN Goods ON Payments.good = Goods.good_id
+WHERE Goods.type = 4
 GROUP BY 1, 2
 ```
 
@@ -225,9 +225,9 @@ GROUP BY 1, 2
   ```mysql
 SELECT Goods.good_name
 FROM Goods
-JOIN Payments ON Goods.good_id=Payments.good
+JOIN Payments ON Goods.good_id = Payments.good
 GROUP BY 1
-HAVING Count(*)>1
+HAVING Count(*) > 1
 ```
 
 </details>
@@ -237,7 +237,7 @@ HAVING Count(*)>1
   ```mysql
 SELECT member_name
 FROM FamilyMembers
-WHERE status='mother'
+WHERE status = 'mother'
 ```
 
 </details>
@@ -247,9 +247,9 @@ WHERE status='mother'
   ```mysql
 SELECT Goods.good_name, Payments.unit_price
 FROM Payments
-JOIN Goods ON Payments.good=Goods.good_id
-JOIN GoodTypes ON Goods.good_id=GoodTypes.good_type_id
-WHERE Goods.type=3
+JOIN Goods ON Payments.good = Goods.good_id
+JOIN GoodTypes ON Goods.good_id = GoodTypes.good_type_id
+WHERE Goods.type = 3
 ORDER BY Payments.unit_price DESC LIMIT 1
 ```
 
@@ -260,8 +260,8 @@ ORDER BY Payments.unit_price DESC LIMIT 1
   ```mysql
 SELECT FamilyMembers.member_name, SUM(Payments.unit_price*Payments.amount) as costs
 FROM FamilyMembers
-JOIN Payments ON FamilyMembers.member_id=Payments.family_member
-WHERE YEAR(Payments.date)=2005 AND MONTH(Payments.date)=06
+JOIN Payments ON FamilyMembers.member_id = Payments.family_member
+WHERE YEAR(Payments.date) = 2005 AND MONTH(Payments.date) = 06
 GROUP BY 1
 ```
 
@@ -286,9 +286,10 @@ WHERE good_id NOT IN (
   ```mysql
 SELECT good_type_name
 FROM GoodTypes
-WHERE good_type_id NOT IN (SELECT type FROM Goods
-JOIN Payments ON Goods.good_id=Payments.good
-WHERE YEAR(date)=2005)
+WHERE good_type_id NOT IN (SELECT type
+  FROM Goods
+  JOIN Payments ON Goods.good_id = Payments.good
+  WHERE YEAR(date) = 2005)
 ```
 
 </details>
@@ -296,11 +297,11 @@ WHERE YEAR(date)=2005)
 <summary>Задание №27: Узнайте, сколько было потрачено на каждую из групп товаров в 2005 году. Выведите название группы и потраченную на неё сумму. Если потраченная сумма равна нулю, т.е. товары из этой группы не покупались в 2005 году, то не выводите её.</summary>
   
   ```mysql
-SELECT GoodTypes.good_type_name, SUM(Payments.amount*Payments.unit_price) as costs
+SELECT GoodTypes.good_type_name, SUM(Payments.amount * Payments.unit_price) as costs
 FROM GoodTypes
-JOIN Goods ON GoodTypes.good_type_id=Goods.type
-JOIN Payments ON Goods.good_id=Payments.good
-WHERE YEAR(Payments.date)=2005
+JOIN Goods ON GoodTypes.good_type_id = Goods.type
+JOIN Payments ON Goods.good_id = Payments.good
+WHERE YEAR(Payments.date) = 2005
 GROUP BY GoodTypes.good_type_name
 ```
 
@@ -309,9 +310,9 @@ GROUP BY GoodTypes.good_type_name
 <summary>Задание №28: Сколько рейсов совершили авиакомпании из Ростова (Rostov) в Москву (Moscow) ?</summary>
   
   ```mysql
-SELECT COUNT(*)as count
+SELECT COUNT(*) as count
 FROM Trip
-WHERE town_from='Rostov' and town_to='Moscow'
+WHERE town_from = 'Rostov' and town_to = 'Moscow'
 ```
 
 </details>
@@ -321,9 +322,9 @@ WHERE town_from='Rostov' and town_to='Moscow'
   ```mysql
 SELECT Passenger.name
 FROM Passenger
-JOIN Pass_in_trip ON Passenger.id=Pass_in_trip.passenger
-JOIN Trip ON Pass_in_trip.trip=Trip.id
-WHERE Trip.town_to='Moscow' AND Trip.plane='TU-134'
+JOIN Pass_in_trip ON Passenger.id = Pass_in_trip.passenger
+JOIN Trip ON Pass_in_trip.trip = Trip.id
+WHERE Trip.town_to = 'Moscow' AND Trip.plane = 'TU-134'
 GROUP BY Passenger.name
 ```
 
@@ -353,7 +354,7 @@ WHERE member_name LIKE '%Quincey'
 <summary>Задание №32: Вывести средний возраст людей (в годах), хранящихся в базе данных. Результат округлите до целого в меньшую сторону.</summary>
   
   ```mysql
-SELECT FLOOR(AVG(YEAR(CURDATE())-YEAR(birthday))) as age
+SELECT FLOOR(AVG(YEAR(CURDATE()) - YEAR(birthday))) as age
 FROM FamilyMembers
 ```
 
@@ -364,8 +365,8 @@ FROM FamilyMembers
   ```mysql
 SELECT AVG(Payments.unit_price) as cost
 FROM Payments
-JOIN Goods ON Payments.good=Goods.good_id
-WHERE Goods.good_name='red caviar' OR Goods.good_name='black caviar'
+JOIN Goods ON Payments.good = Goods.good_id
+WHERE Goods.good_name = 'red caviar' OR Goods.good_name = 'black caviar'
 ```
 
 </details>
@@ -385,7 +386,7 @@ WHERE name LIKE '10%'
   ```mysql
 SELECT COUNT(DISTINCT classroom) as count
 FROM Schedule
-WHERE date like '2019-09-02'
+WHERE date LIKE '2019-09-02'
 ```
 
 </details>
@@ -395,7 +396,7 @@ WHERE date like '2019-09-02'
   ```mysql
 SELECT *
 FROM Student
-WHERE address like 'ul. Pushkina%'
+WHERE address LIKE 'ul. Pushkina%'
 ```
 
 </details>
@@ -412,9 +413,9 @@ FROM Student
 <summary>Задание №38: Сколько Анн (Anna) учится в школе?</summary>
   
   ```mysql
-SELECT COUNT(*) AS count
+SELECT COUNT(*) as count
 FROM Student
-WHERE first_name='Anna'
+WHERE first_name = 'Anna'
 ```
 
 </details>
@@ -424,8 +425,8 @@ WHERE first_name='Anna'
   ```mysql
 SELECT COUNT(*) as count
 FROM Class
-JOIN Student_in_class ON Class.id=Student_in_class.class
-WHERE Class.name='10 B'
+JOIN Student_in_class ON Class.id = Student_in_class.class
+WHERE Class.name = '10 B'
 ```
 
 </details>
@@ -435,14 +436,14 @@ WHERE Class.name='10 B'
   ```mysql
 SELECT Subject.name as subjects
 FROM Subject
-JOIN Schedule ON Subject.id=Schedule.subject
-JOIN Teacher ON Schedule.teacher=Teacher.id
-WHERE Teacher.last_name='Romashkin' AND Teacher.first_name LIKE 'P%' AND Teacher.middle_name LIKE 'P%'
+JOIN Schedule ON Subject.id = Schedule.subject
+JOIN Teacher ON Schedule.teacher = Teacher.id
+WHERE Teacher.last_name = 'Romashkin' AND Teacher.first_name LIKE 'P%' AND Teacher.middle_name LIKE 'P%'
 ```
 
 </details>
 <details>
-<summary>Задание №26: Определить группы товаров, которые не приобретались в 2005 году.</summary>
+<summary>Задание №41: Выясните, во сколько по расписанию начинается четвёртое занятие.</summary>
   
   ```mysql
 
