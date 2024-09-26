@@ -107,8 +107,10 @@ WHERE time_out BETWEEN '1900-01-01 10:00:00' AND '1900-01-01 14:00:00'
   ```mysql
 SELECT name
 FROM Passenger
-WHERE LENGTH(name)=(SELECT max(LENGTH(name))
-  FROM Passenger)
+WHERE LENGTH(name) = (
+    SELECT max(LENGTH(name))
+    FROM Passenger
+)
 ```
 
 </details>
@@ -286,10 +288,12 @@ WHERE good_id NOT IN (
   ```mysql
 SELECT good_type_name
 FROM GoodTypes
-WHERE good_type_id NOT IN (SELECT type
-  FROM Goods
-  JOIN Payments ON Goods.good_id = Payments.good
-  WHERE YEAR(date) = 2005)
+WHERE good_type_id NOT IN (
+    SELECT type
+    FROM Goods
+    JOIN Payments ON Goods.good_id = Payments.good
+    WHERE YEAR(date) = 2005
+)
 ```
 
 </details>
@@ -439,6 +443,115 @@ FROM Subject
 JOIN Schedule ON Subject.id = Schedule.subject
 JOIN Teacher ON Schedule.teacher = Teacher.id
 WHERE Teacher.last_name = 'Romashkin' AND Teacher.first_name LIKE 'P%' AND Teacher.middle_name LIKE 'P%'
+```
+
+</details>
+<details>
+<summary><b>Задание №41:</b> Выясните, во сколько по расписанию начинается четвёртое занятие.</summary>
+  
+  ```mysql
+SELECT DISTINCT Timepair.start_pair
+FROM Timepair
+JOIN Schedule ON Timepair.id = Schedule.number_pair
+WHERE Schedule.number_pair = 4
+```
+
+</details>
+<details>
+<summary><b>Задание №42:</b> Сколько времени обучающийся будет находиться в школе, учась со 2-го по 4-ый уч. предмет?</summary>
+  
+  ```mysql
+SELECT TIMEDIFF(
+    (SELECT end_pair FROM Timepair WHERE id = 4),
+    (SELECT start_pair FROM Timepair WHERE id = 2)
+) AS time
+
+```
+
+</details>
+<details>
+<summary><b>Задание №43:</b> Выведите фамилии преподавателей, которые ведут физическую культуру (Physical Culture). Отсортируйте преподавателей по фамилии в алфавитном порядке.</summary>
+  
+  ```mysql
+SELECT Teacher.last_name
+FROM Teacher
+JOIN Schedule ON Teacher.id = Schedule.teacher
+JOIN Subject ON Schedule.subject = Subject.id
+WHERE Subject.name = 'Physical Culture'
+ORDER BY 1 asc
+```
+
+</details>
+<details>
+<summary><b>Задание №44:</b> Найдите максимальный возраст (количество лет) среди обучающихся 10 классов на сегодняшний день. Для получения текущих даты и времени используйте функцию NOW().</summary>
+  
+  ```mysql
+SELECT MAX(TIMESTAMPDIFF(year, Student.birthday, NOW())) as max_year
+FROM Student
+JOIN Student_in_class ON Student.id = Student_in_class.student
+JOIN Class ON Student_in_class.class = Class.id
+WHERE Class.name LIKE '10%'
+```
+
+</details>
+<details>
+<summary><b>Задание №45:</b> Какие кабинеты чаще всего использовались для проведения занятий? Выведите те, которые использовались максимальное количество раз.</summary>
+  
+  ```mysql
+SELECT classroom
+FROM Schedule
+GROUP BY classroom
+HAVING COUNT(classroom) = (
+    SELECT COUNT(*)
+    FROM Schedule
+    GROUP BY classroom
+    ORDER BY 1 DESC LIMIT 1
+)
+```
+
+</details>
+<details>
+<summary><b>Задание №46:</b> В каких классах введет занятия преподаватель "Krauze" ?</summary>
+  
+  ```mysql
+SELECT Class.name
+FROM Class
+JOIN Schedule ON Class.id = Schedule.class
+JOIN Teacher ON Schedule.teacher = Teacher.id
+WHERE Teacher.last_name = 'Krauze'
+GROUP BY Class.name
+```
+
+</details>
+<details>
+<summary><b>Задание №47:</b> Сколько занятий провел Krauze 30 августа 2019 г.?</summary>
+  
+  ```mysql
+SELECT COUNT(*) as count
+FROM Schedule
+JOIN Teacher ON Schedule.teacher = Teacher.id
+WHERE Teacher.last_name = 'Krauze' AND Schedule.date LIKE '2019-08-30%'
+```
+
+</details>
+<details>
+<summary><b>Задание №48:</b> Выведите заполненность классов в порядке убывания</summary>
+  
+  ```mysql
+SELECT Class.name, COUNT(*) as count
+FROM Class
+JOIN Student_in_class ON Class.id = Student_in_class.class
+JOIN Student ON Student_in_class.student = Student.id
+GROUP BY 1
+ORDER BY 2 DESC
+```
+
+</details>
+<details>
+<summary><b>Задание №49:</b> Какой процент обучающихся учится в "10 A" классе? Выведите ответ в диапазоне от 0 до 100 с округлением до четырёх знаков после запятой, например, 96.0201.</summary>
+  
+  ```mysql
+
 ```
 
 </details>
