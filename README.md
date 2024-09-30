@@ -551,12 +551,256 @@ ORDER BY 2 DESC
 <summary><b>Задание №49:</b> Какой процент обучающихся учится в "10 A" классе? Выведите ответ в диапазоне от 0 до 100 с округлением до четырёх знаков после запятой, например, 96.0201.</summary>
   
   ```mysql
+SELECT ROUND(((
+    SELECT COUNT(*)
+    FROM Student_in_class
+    JOIN Class ON Student_in_class.class = Class.id
+    WHERE Class.name = '10 A')
+    /
+    (SELECT COUNT(*)
+    FROM Student_in_class
+    JOIN Class ON Student_in_class.class = Class.id)) * 100, 4) as percent
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой процент обучающихся родился в 2000 году? Результат округлить до целого в меньшую сторону.</summary>
+  
+  ```mysql
+SELECT FLOOR(((
+    SELECT COUNT(*)
+    FROM Student
+    WHERE YEAR(birthday) = 2000)
+    /
+    (SELECT COUNT(*)
+    FROM Student)) * 100) as percent
+```
+
+</details>
+<details>
+<summary><b>Задание №51:</b> Добавьте товар с именем "Cheese" и типом "food" в список товаров (Goods).</summary>
+  
+  ```mysql
+INSERT INTO Goods (good_name, type)
+VALUES ('Cheese',
+    (SELECT good_type_id
+    FROM GoodTypes
+    WHERE good_type_name = 'food')
+    )
+```
+
+</details>
+<details>
+<summary><b>Задание №52:</b> Добавьте в список типов товаров (GoodTypes) новый тип "auto".</summary>
+  
+  ```mysql
+INSERT INTO GoodTypes
+SET good_type_id = (
+    SELECT COUNT(*) + 1
+    FROM GoodTypes as table_name
+),
+    good_type_name = 'auto'
+```
+
+</details>
+<details>
+<summary><b>Задание №53:</b> Измените имя "Andie Quincey" на новое "Andie Anthony".</summary>
+  
+  ```mysql
+UPDATE FamilyMembers
+SET member_name = 'Andie Anthony'
+WHERE member_name = 'Andie Quincey'
+```
+
+</details>
+<details>
+<summary><b>Задание №54:</b> Удалить всех членов семьи с фамилией "Quincey".</summary>
+  
+  ```mysql
+DELETE
+FROM FamilyMembers
+WHERE member_name LIKE '%Quincey'
+```
+
+</details>
+<details>
+<summary><b>Задание №55:</b> Удалить компании, совершившие наименьшее количество рейсов.</summary>
+  
+  ```mysql
 
 ```
 
 </details>
 <details>
-<summary><b>Задание №41:</b> Выясните, во сколько по расписанию начинается четвёртое занятие.</summary>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
+  
+  ```mysql
+
+```
+
+</details>
+<details>
+<summary><b>Задание №50:</b> Какой.</summary>
   
   ```mysql
 
