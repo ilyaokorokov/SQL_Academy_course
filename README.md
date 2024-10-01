@@ -627,52 +627,87 @@ WHERE member_name LIKE '%Quincey'
 <summary><b>Задание №55:</b> Удалить компании, совершившие наименьшее количество рейсов.</summary>
   
   ```mysql
-
+DELETE
+FROM company
+WHERE id IN (
+    SELECT company
+    FROM trip
+    GROUP BY company
+    HAVING COUNT(*) = (
+        SELECT COUNT(*) AS c
+        FROM trip
+        GROUP BY company
+        ORDER BY 1
+        LIMIT 1
+        )
+    )
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №56:</b> Удалить все перелеты, совершенные из Москвы (Moscow).</summary>
   
   ```mysql
-
+DELETE
+FROM Trip
+WHERE town_from = 'Moscow'
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №57:</b> Перенести расписание всех занятий на 30 мин. вперед.</summary>
   
   ```mysql
-
+UPDATE Timepair
+SET start_pair = ADDTIME(start_pair, '00:30:00'),
+    end_pair = ADDTIME(end_pair, '00:30:00')
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №58:</b> Добавить отзыв с рейтингом 5 на жилье, находящиеся по адресу "11218, Friel Place, New York", от имени "George Clooney".</summary>
   
   ```mysql
-
+INSERT INTO Reviews
+SET rating = 5,
+    id = (
+        SELECT COUNT(*) + 1
+        FROM Reviews as rw),
+    reservation_id = (
+        SELECT rs.id
+        FROM Reservations as rs
+        JOIN Users as us ON rs.user_id = us.id
+        JOIN Rooms as rom ON rs.room_id = rom.id
+        WHERE us.name = 'George Clooney' AND rom.address = '11218, Friel Place, New York')
+    
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №59:</b> Вывести пользователей,указавших Белорусский номер телефона ? Телефонный код Белоруссии +375.</summary>
   
   ```mysql
-
+SELECT *
+FROM Users
+WHERE phone_number LIKE '+375%'
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №60:</b> Выведите идентификаторы преподавателей, которые хотя бы один раз за всё время преподавали в каждом из одиннадцатых классов.</summary>
   
   ```mysql
-
+SELECT Schedule.Teacher
+FROM Schedule
+JOIN Class ON Schedule.class = Class.id
+WHERE Class.name LIKE '11%'
+GROUP BY 1
+HAVING COUNT(DISTINCT Class.name) = 2
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №61:</b> Выведите список комнат, которые были зарезервированы хотя бы на одни сутки в 12-ую неделю 2020 года. В данной задаче в качестве одной недели примите период из семи дней, первый из которых начинается 1 января 2020 года. Например, первая неделя года — 1–7 января, а третья — 15–21 января.</summary>
   
   ```mysql
 
