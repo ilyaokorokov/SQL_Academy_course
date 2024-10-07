@@ -777,20 +777,27 @@ GROUP BY 1, 2
 <summary><b>Задание №67:</b> Вывести время отлета и время прилета для каждого перелета в формате "ЧЧ:ММ, ДД.ММ - ЧЧ:ММ, ДД.ММ", где часы и минуты с ведущим нулем, а день и месяц без.</summary>
   
 ```mysql
-
+SELECT CONCAT(DATE_FORMAT(time_out, "%H:%i, %e.%c"), ' - ' , DATE_FORMAT(time_in, "%H:%i, %e.%c")) as flight_time
+FROM Trip
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №68:</b> Для каждой комнаты, которую снимали как минимум 1 раз, найдите имя человека, снимавшего ее последний раз, и дату, когда он выехал</summary>
   
 ```mysql
-
+SELECT r.room_id, u.name, r.end_date
+FROM Reservations r
+JOIN Users u ON r.user_id = u.id
+WHERE (r.room_id, r.end_date) IN (
+    SELECT room_id, MAX(end_date)
+    FROM Reservations
+    GROUP BY 1)
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №69:</b> Вывести идентификаторы всех владельцев комнат, что размещены на сервисе бронирования жилья и сумму, которую они заработали.</summary>
   
 ```mysql
 
