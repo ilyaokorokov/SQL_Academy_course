@@ -709,7 +709,74 @@ HAVING COUNT(DISTINCT Class.name) = 2
 <details>
 <summary><b>Задание №61:</b> Выведите список комнат, которые были зарезервированы хотя бы на одни сутки в 12-ую неделю 2020 года. В данной задаче в качестве одной недели примите период из семи дней, первый из которых начинается 1 января 2020 года. Например, первая неделя года — 1–7 января, а третья — 15–21 января.</summary>
   
-  ```mysql
+```mysql
+SELECT Rooms.*
+FROM Rooms
+JOIN Reservations ON Rooms.id = Reservations.room_id
+WHERE DATE(Reservations.start_date) BETWEEN "2020-03-18" AND "2020-03-24"
+```
+
+</details>
+<details>
+<summary><b>Задание №62:</b> Вывести в порядке убывания популярности доменные имена 2-го уровня, используемые пользователями для электронной почты. Полученный результат необходимо дополнительно отсортировать по возрастанию названий доменных имён.</summary>
+  
+```mysql
+SELECT SUBSTRING_INDEX(email, '@', -1) as domain, COUNT(*) as count
+FROM Users
+GROUP BY domain
+ORDER BY 2 DESC, 1 ASC
+```
+
+</details>
+<details>
+<summary><b>Задание №63:</b> Выведите отсортированный список (по возрастанию) фамилий и имен студентов в виде Фамилия.И.</summary>
+  
+```mysql
+SELECT CONCAT(last_name, '.', LEFT(first_name, 1), '.') as name
+FROM Student
+ORDER BY 1
+```
+
+</details>
+<details>
+<summary><b>Задание №64:</b> Вывести количество бронирований по каждому месяцу каждого года, в которых было хотя бы 1 бронирование. Результат отсортируйте в порядке возрастания даты бронирования.</summary>
+  
+```mysql
+SELECT YEAR(start_date) as year, MONTH(start_date) as month, COUNT(*) as amount
+FROM Reservations
+GROUP BY 1, 2
+HAVING amount >=1
+ORDER BY 1, 2
+```
+
+</details>
+<details>
+<summary><b>Задание №65:</b> Необходимо вывести рейтинг для комнат, которые хоть раз арендовали, как среднее значение рейтинга отзывов округленное до целого вниз.</summary>
+  
+```mysql
+SELECT Reservations.room_id, FLOOR(AVG(Reviews.rating)) as rating
+FROM Reservations
+JOIN Reviews ON Reservations.id = Reviews.reservation_id
+GROUP BY 1
+```
+
+</details>
+<details>
+<summary><b>Задание №66:</b> Вывести список комнат со всеми удобствами (наличие ТВ, интернета, кухни и кондиционера), а также общее количество дней и сумму за все дни аренды каждой из таких комнат.</summary>
+  
+```mysql
+SELECT Rooms.home_type, Rooms.address, IFNULL(SUM(DATEDIFF(Reservations.end_date, Reservations.start_date)), 0) as days, IFNULL(SUM(Reservations.total), 0) as total_fee
+FROM Rooms
+LEFT JOIN Reservations ON Rooms.id = Reservations.room_id
+WHERE has_internet = 1 AND has_kitchen = 1 AND has_air_con = 1 AND has_tv = 1
+GROUP BY 1, 2
+```
+
+</details>
+<details>
+<summary><b>Задание №67:</b> Вывести время отлета и время прилета для каждого перелета в формате "ЧЧ:ММ, ДД.ММ - ЧЧ:ММ, ДД.ММ", где часы и минуты с ведущим нулем, а день и месяц без.</summary>
+  
+```mysql
 
 ```
 
@@ -717,7 +784,7 @@ HAVING COUNT(DISTINCT Class.name) = 2
 <details>
 <summary><b>Задание №50:</b> Какой.</summary>
   
-  ```mysql
+```mysql
 
 ```
 
@@ -725,7 +792,7 @@ HAVING COUNT(DISTINCT Class.name) = 2
 <details>
 <summary><b>Задание №50:</b> Какой.</summary>
   
-  ```mysql
+```mysql
 
 ```
 
@@ -733,7 +800,7 @@ HAVING COUNT(DISTINCT Class.name) = 2
 <details>
 <summary><b>Задание №50:</b> Какой.</summary>
   
-  ```mysql
+```mysql
 
 ```
 
@@ -741,7 +808,7 @@ HAVING COUNT(DISTINCT Class.name) = 2
 <details>
 <summary><b>Задание №50:</b> Какой.</summary>
   
-  ```mysql
+```mysql
 
 ```
 
@@ -749,7 +816,7 @@ HAVING COUNT(DISTINCT Class.name) = 2
 <details>
 <summary><b>Задание №50:</b> Какой.</summary>
   
-  ```mysql
+```mysql
 
 ```
 
@@ -757,7 +824,7 @@ HAVING COUNT(DISTINCT Class.name) = 2
 <details>
 <summary><b>Задание №50:</b> Какой.</summary>
   
-  ```mysql
+```mysql
 
 ```
 
@@ -765,7 +832,7 @@ HAVING COUNT(DISTINCT Class.name) = 2
 <details>
 <summary><b>Задание №50:</b> Какой.</summary>
   
-  ```mysql
+```mysql
 
 ```
 
@@ -773,7 +840,7 @@ HAVING COUNT(DISTINCT Class.name) = 2
 <details>
 <summary><b>Задание №50:</b> Какой.</summary>
   
-  ```mysql
+```mysql
 
 ```
 
@@ -781,7 +848,7 @@ HAVING COUNT(DISTINCT Class.name) = 2
 <details>
 <summary><b>Задание №50:</b> Какой.</summary>
   
-  ```mysql
+```mysql
 
 ```
 
@@ -789,55 +856,7 @@ HAVING COUNT(DISTINCT Class.name) = 2
 <details>
 <summary><b>Задание №50:</b> Какой.</summary>
   
-  ```mysql
-
-```
-
-</details>
-<details>
-<summary><b>Задание №50:</b> Какой.</summary>
-  
-  ```mysql
-
-```
-
-</details>
-<details>
-<summary><b>Задание №50:</b> Какой.</summary>
-  
-  ```mysql
-
-```
-
-</details>
-<details>
-<summary><b>Задание №50:</b> Какой.</summary>
-  
-  ```mysql
-
-```
-
-</details>
-<details>
-<summary><b>Задание №50:</b> Какой.</summary>
-  
-  ```mysql
-
-```
-
-</details>
-<details>
-<summary><b>Задание №50:</b> Какой.</summary>
-  
-  ```mysql
-
-```
-
-</details>
-<details>
-<summary><b>Задание №50:</b> Какой.</summary>
-  
-  ```mysql
+```mysql
 
 ```
 
