@@ -845,6 +845,18 @@ WHERE e.salary > c.salary
 
 </details>
 <details>
+<summary><b>Задание №109:</b> Выведите название страны, где находится город «Salzburg»</summary>
+  
+```mysql
+SELECT Countries.name as country_name
+FROM Countries
+JOIN Regions ON Countries.id = Regions.countryid
+JOIN Cities ON Regions.id = Cities.regionid
+WHERE Cities.name = 'Salzburg'
+```
+
+</details>
+<details>
 <summary><b>Задание №114:</b> Напишите запрос, который выведет имена пилотов, которые в качестве второго пилота (second_pilot_id) в августе 2023 года летали в New York</summary>
   
 ```mysql
