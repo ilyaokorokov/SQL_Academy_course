@@ -805,42 +805,53 @@ WHERE (r.room_id, r.end_date) IN (
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №74:</b> Выведите идентификатор и признак наличия интернета в помещении. Если интернет в сдаваемом жилье присутствует, то выведите «YES», иначе «NO».</summary>
   
 ```mysql
-
+SELECT id, IF(has_internet = 1, 'YES', 'NO') as has_internet
+FROM Rooms
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №75:</b> Выведите фамилию, имя и дату рождения студентов, кто был рожден в мае.</summary>
   
 ```mysql
-
+SELECT last_name, first_name, birthday
+FROM Student
+WHERE MONTH(birthday) = 05
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №99:</b> Посчитай доход с женской аудитории (доход = сумма(price * items)). Обратите внимание, что в таблице женская аудитория имеет поле user_gender «female» или «f».</summary>
   
 ```mysql
-
+SELECT SUM(price*items) as income_from_female
+FROM Purchases
+WHERE user_gender LIKE 'f%'
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №103:</b> Вывести список имён сотрудников, получающих большую заработную плату, чем у непосредственного руководителя.</summary>
   
 ```mysql
-
+SELECT e.name
+FROM Employee e
+JOIN Employee c ON e.chief_id = c.id
+WHERE e.salary > c.salary
 ```
 
 </details>
 <details>
-<summary><b>Задание №50:</b> Какой.</summary>
+<summary><b>Задание №114:</b> Напишите запрос, который выведет имена пилотов, которые в качестве второго пилота (second_pilot_id) в августе 2023 года летали в New York</summary>
   
 ```mysql
-
+SELECT name
+FROM Pilots
+JOIN Flights ON Pilots.pilot_id = Flights.second_pilot_id
+WHERE Flights.destination = 'New York' AND Flights.flight_date LIKE '2023-08%'
 ```
 
 </details>
