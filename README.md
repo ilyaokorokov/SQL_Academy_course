@@ -881,6 +881,14 @@ WHERE MONTH(birthday) = 05
 
 </details>
 <details>
+<summary><b>Задание №76:</b> Вывести имена всех пользователей сервиса бронирования жилья, а также два признака: является ли пользователь собственником какого-либо жилья (is_owner) и является ли пользователь арендатором (is_tenant). В случае наличия у пользователя признака необходимо вывести в соответствующее поле 1, иначе 0.</summary>
+  
+```mysql
+
+```
+
+</details>
+<details>
 <summary><b>Задание №99:</b> Посчитай доход с женской аудитории (доход = сумма(price * items)). Обратите внимание, что в таблице женская аудитория имеет поле user_gender «female» или «f».</summary>
   
 ```mysql
@@ -921,22 +929,6 @@ SELECT name
 FROM Pilots
 JOIN Flights ON Pilots.pilot_id = Flights.second_pilot_id
 WHERE Flights.destination = 'New York' AND Flights.flight_date LIKE '2023-08%'
-```
-
-</details>
-<details>
-<summary><b>Задание №50:</b> Какой.</summary>
-  
-```mysql
-
-```
-
-</details>
-<details>
-<summary><b>Задание №50:</b> Какой.</summary>
-  
-```mysql
-
 ```
 
 </details>
