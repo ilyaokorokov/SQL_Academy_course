@@ -800,7 +800,64 @@ WHERE (r.room_id, r.end_date) IN (
 <summary><b>Задание №69:</b> Вывести идентификаторы всех владельцев комнат, что размещены на сервисе бронирования жилья и сумму, которую они заработали.</summary>
   
 ```mysql
+SELECT Rooms.owner_id, IFNULL(SUM(Reservations.total), 0) as total_earn
+FROM Rooms
+LEFT JOIN Reservations ON Rooms.id = Reservations.room_id
+GROUP BY Rooms.owner_id
+ORDER BY 1 ASC
+```
 
+</details>
+<details>
+<summary><b>Задание №70:</b> Необходимо категоризовать жилье на economy, comfort, premium по цене соответственно <= 100, 100 < цена < 200, >= 200. В качестве результата вывести таблицу с названием категории и количеством жилья, попадающего в данную категорию.</summary>
+  
+```mysql
+SELECT 
+    CASE 
+        WHEN price <= 100 THEN 'economy'
+        WHEN price > 100 AND price < 200 THEN 'comfort'
+        ELSE 'premium'
+    END AS category,
+    COUNT(*) AS count
+FROM Rooms
+GROUP BY 1
+```
+
+</details>
+<details>
+<summary><b>Задание №71:</b> Найдите какой процент пользователей, зарегистрированных на сервисе бронирования, хоть раз арендовали или сдавали в аренду жилье. Результат округлите до сотых.</summary>
+  
+```mysql
+SELECT ROUND(
+    (SELECT COUNT(*)
+    FROM (
+        SELECT DISTINCT owner_id FROM Rooms
+        JOIN Reservations ON Rooms.id = Reservations.room_id
+        UNION
+        SELECT user_id FROM Reservations
+        ) AS active_users) * 100.0 /
+    (SELECT COUNT(*) FROM Users),2) AS percent
+```
+
+</details>
+<details>
+<summary><b>Задание №72:</b> Выведите среднюю цену бронирования за сутки для каждой из комнат, которую бронировали хотя бы один раз. Среднюю цену необходимо округлить до целого значения вверх.</summary>
+  
+```mysql
+SELECT room_id, CEILING(AVG(price)) AS avg_price
+FROM Reservations
+GROUP BY room_id
+```
+
+</details>
+<details>
+<summary><b>Задание №73:</b> Выведите id тех комнат, которые арендовали нечетное количество раз.</summary>
+  
+```mysql
+SELECT room_id, COUNT(*) as count
+FROM Reservations
+GROUP BY 1
+HAVING COUNT(*) % 2 != 0
 ```
 
 </details>
