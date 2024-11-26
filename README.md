@@ -884,7 +884,95 @@ WHERE MONTH(birthday) = 05
 <summary><b>Задание №76:</b> Вывести имена всех пользователей сервиса бронирования жилья, а также два признака: является ли пользователь собственником какого-либо жилья (is_owner) и является ли пользователь арендатором (is_tenant). В случае наличия у пользователя признака необходимо вывести в соответствующее поле 1, иначе 0.</summary>
   
 ```mysql
+SELECT u.name,
+    CASE WHEN r.owner_id IS NOT NULL THEN 1 ELSE 0 END AS is_owner,
+    CASE WHEN rv.user_id IS NOT NULL THEN 1 ELSE 0 END AS is_tenant
+FROM Users u
+LEFT JOIN Rooms r ON u.id = r.owner_id
+LEFT JOIN Reservations rv ON u.id = rv.user_id
+GROUP BY u.id, u.name
+```
 
+</details>
+<details>
+<summary><b>Задание №77:</b> Создайте представление с именем "People", которое будет содержать список имен (first_name) и фамилий (last_name) всех студентов (Student) и преподавателей(Teacher).</summary>
+  
+```mysql
+CREATE VIEW People AS
+SELECT first_name, last_name
+FROM Student
+UNION
+SELECT first_name, last_name
+FROM Teacher
+```
+
+</details>
+<details>
+<summary><b>Задание №78:</b> Выведите всех пользователей с электронной почтой в «hotmail.com»</summary>
+  
+```mysql
+SELECT *
+FROM Users
+WHERE email LIKE "%@hotmail.com"
+```
+
+</details>
+<details>
+<summary><b>Задание №79:</b> Выведите поля id, home_type, price у всего жилья из таблицы Rooms. Если комната имеет телевизор и интернет одновременно, то в качестве цены в поле price выведите цену, применив скидку 10%.</summary>
+  
+```mysql
+SELECT id, home_type,
+        CASE WHEN has_tv = TRUE AND has_internet = TRUE THEN price * 0.9 ELSE price END AS price
+FROM Rooms
+```
+
+</details>
+<details>
+<summary><b>Задание №80:</b> Создайте представление «Verified_Users» с полями id, name и email, которое будет показывает только тех пользователей, у которых подтвержден адрес электронной почты.</summary>
+  
+```mysql
+CREATE VIEW Verified_Users AS
+SELECT id, name, email
+FROM Users
+WHERE email_verified_at IS NOT NULL
+```
+
+</details>
+<details>
+<summary><b>Задание №93:</b> Какой средний возраст клиентов, купивших Smartwatch (использовать наименование товара product.name) в 2024 году?</summary>
+  
+```mysql
+SELECT ROUND(AVG(c.age), 1) AS average_age
+FROM Customer c
+JOIN Purchase p ON c.customer_key = p.customer_key
+JOIN Product pr ON p.product_key = pr.product_key
+WHERE pr.name = 'Smartwatch' AND YEAR(p.date) = 2024
+```
+
+</details>
+<details>
+<summary><b>Задание №94:</b> Вывести имена покупателей, каждый из которых приобрёл Laptop и Monitor (использовать наименование товара product.name) в марте 2024 года?</summary>
+  
+```mysql
+SELECT c.name
+FROM Customer c
+JOIN Purchase p ON c.customer_key = p.customer_key
+JOIN Product pr ON p.product_key = pr.product_key
+WHERE pr.name IN ('Laptop', 'Monitor') AND YEAR(p.date) = 2024 AND MONTH(p.date) = 3
+GROUP BY c.name
+HAVING COUNT(DISTINCT pr.name) = 2
+```
+
+</details>
+<details>
+<summary><b>Задание №97:</b> Посчитать количество работающих складов на текущую дату по каждому городу. Вывести только те города, у которых количество складов более 80. Данные на выходе - город, количество складов.</summary>
+  
+```mysql
+SELECT city, COUNT(warehouse_id) AS warehouse_count
+FROM Warehouses
+WHERE date_close IS NULL
+GROUP BY 1
+HAVING warehouse_count > 80
 ```
 
 </details>
@@ -895,6 +983,20 @@ WHERE MONTH(birthday) = 05
 SELECT SUM(price*items) as income_from_female
 FROM Purchases
 WHERE user_gender LIKE 'f%'
+```
+
+</details>
+<details>
+<summary><b>Задание №101:</b> Выведи для каждого пользователя первое наименование, которое он заказал (первое по времени транзакции).</summary>
+  
+```mysql
+SELECT user_id, item
+FROM Transactions t1
+WHERE transaction_ts = (
+        SELECT MIN(transaction_ts)
+        FROM Transactions t2
+        WHERE t1.user_id = t2.user_id
+    )
 ```
 
 </details>
@@ -922,6 +1024,17 @@ WHERE Cities.name = 'Salzburg'
 
 </details>
 <details>
+<summary><b>Задание №111:</b> Посчитайте население каждого региона. В качестве результата выведите название региона и его численность населения.</summary>
+  
+```mysql
+SELECT r.name AS region_name, SUM(c.population) AS total_population
+FROM Regions r
+JOIN Cities c ON r.id = c.regionid
+GROUP BY 1
+```
+
+</details>
+<details>
 <summary><b>Задание №114:</b> Напишите запрос, который выведет имена пилотов, которые в качестве второго пилота (second_pilot_id) в августе 2023 года летали в New York</summary>
   
 ```mysql
@@ -929,14 +1042,6 @@ SELECT name
 FROM Pilots
 JOIN Flights ON Pilots.pilot_id = Flights.second_pilot_id
 WHERE Flights.destination = 'New York' AND Flights.flight_date LIKE '2023-08%'
-```
-
-</details>
-<details>
-<summary><b>Задание №50:</b> Какой.</summary>
-  
-```mysql
-
 ```
 
 </details>
